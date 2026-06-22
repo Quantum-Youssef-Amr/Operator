@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 9005769366239558853}
   - component: {fileID: 1720130968825255507}
   - component: {fileID: 2000180399456091100}
+  - component: {fileID: 7856021067487741927}
   m_Layer: 0
   m_Name: Jamming zoon
   m_TagString: Untagged
@@ -248,3 +249,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &7856021067487741927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9075242171685097708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c3932116a84d345aec487b83d47b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JammingZoonHazard
+  HazardDuration: 20
+  HazardScale: {x: 3, y: 6}
+  HazardDamage: 10
+  TeleportChance: 0.3
+  HideDuration: 2

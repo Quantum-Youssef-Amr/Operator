@@ -6,7 +6,7 @@ using System;
 public class Hazard : MonoBehaviour
 {
     [SerializeField] protected float HazardDuration;
-    [SerializeField] protected float HazardScale;
+    [SerializeField] protected Vector2 HazardScale;
     [SerializeField] protected float HazardDamage;
 
     protected CircleCollider2D _area;
@@ -19,7 +19,7 @@ public class Hazard : MonoBehaviour
         _area = GetComponent<CircleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
 
-        transform.localScale = Vector3.one * HazardScale;
+        transform.localScale = Vector3.one * UnityEngine.Random.Range(HazardScale.x, HazardScale.y);
         StartCoroutine(DestroyAfter(HazardDuration));
     }
 

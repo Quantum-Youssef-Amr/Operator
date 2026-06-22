@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5918073264485488643}
   - component: {fileID: 4843244567000751951}
   - component: {fileID: 6889631696276542462}
+  - component: {fileID: 1051333269313164144}
   m_Layer: 0
   m_Name: Storm
   m_TagString: Untagged
@@ -4911,3 +4912,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.055005163, y: 0.0023279786}
   m_Radius: 1.136281
+--- !u!114 &1051333269313164144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40875429582622644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09940acdc9fdc54093e3103df771a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormHazard
+  HazardDuration: 50
+  HazardScale: {x: 2, y: 5}
+  HazardDamage: 20
+  TeleportChance: 0.4
+  TeleportDuration: 3
