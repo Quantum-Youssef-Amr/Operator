@@ -21,6 +21,7 @@ public enum PlaneTypeEnum
 {
     military = 80,
     civilian = 150,
+    privatePlanes = 180,
     cargo = 120
 }
 

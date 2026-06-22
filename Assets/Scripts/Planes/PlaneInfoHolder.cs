@@ -33,4 +33,9 @@ public class PlaneInfoHolder : MonoBehaviour
         return _planeType;
     }
 
+    public void SetPlaneType(planeType planeType)
+    {
+        _planeType = planeType;
+    }
+
 }
