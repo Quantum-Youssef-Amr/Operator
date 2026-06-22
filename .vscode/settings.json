@@ -70,8 +70,11 @@
   "dotnet.defaultSolution": "Operator.slnx",
   "cSpell.words": [
     "Behaviour",
+    "Camerashake",
     "Lerp",
+    "Mathf",
     "Rigidbody",
-    "Scriptable"
+    "Scriptable",
+    "UGUI"
   ]
 }

@@ -1,24 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlaneInfoHolder))]
 public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private PlaneType planeType;
     [SerializeField] private float UpdateLineTimer = 0.2f;
     [SerializeField] private float PointDeleteDistance = 0.2f;
+    public Vector2 ExitAngle = new Vector2(0, 360);
 
-    private SpriteRenderer _spriteRenderer;
+    private planeType planeType;
     private Rigidbody2D _rb;
-    private Transform _t;
+    private Transform _t, _appearanceChild;
     private List<Vector3> _movementWaypoints = new();
+    private Vector2 _StartPoint = -Vector2.one;
     private bool _isInEditPathMode;
 
     #region inputs
@@ -27,8 +25,9 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
     {
         _inputs = new();
         _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        planeType = GetComponent<PlaneInfoHolder>().GetPlaneType();
         _t = transform;
+        _appearanceChild = _t.GetChild(0).transform;
     }
 
     void OnEnable() => _inputs.Enable();
@@ -37,7 +36,6 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        _spriteRenderer.sprite = planeType.PlaneSprite;
         StartCoroutine(UpdatePathLineRendererTimer());
 
         _inputs.Player.LeftMouseClick.performed += _ =>
@@ -53,7 +51,7 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
         _inputs.Player.RightMouseClick.performed += _ =>
         {
             _isInEditPathMode = false;
-            HidePathLineRenderer();
+            SetSelectionState();
         };
     }
 
@@ -79,30 +77,60 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
 
     private void MoveToPoint(Vector2 point)
     {
+        if (planeType.RotatesWhenMoving)
+            RotateToPointHeading(point, _appearanceChild);
+        else
+            _appearanceChild.rotation = Quaternion.identity;
+
         _rb.AddForce(planeType.PlaneMovementSpeed * Time.deltaTime * _t.up, ForceMode2D.Force);
-        RotateToPointHeading(point);
+        RotateToPointHeading(point, _t);
     }
 
-    private void RotateToPointHeading(Vector2 point)
+    private void RotateToPointHeading(Vector2 point, Transform obj_transform)
     {
-        _t.rotation = Quaternion.RotateTowards(_t.rotation, Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, (point - (Vector2)_t.position).normalized)), planeType.PlaneRotatingSpeed * Time.deltaTime);
+        obj_transform.rotation = Quaternion.RotateTowards(_t.rotation, Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, (point - (Vector2)_t.position).normalized)), planeType.PlaneRotatingSpeed * Time.deltaTime);
     }
 
     private void MoveInLine()
     {
+        if (_movementWaypoints.Count == 0 && _StartPoint != -Vector2.one)
+        {
+            _rb.AddForce(planeType.PlaneMovementSpeed * Time.deltaTime * (_StartPoint - (Vector2)_t.position).normalized, ForceMode2D.Force);
+            return;
+        }
         _rb.AddForce(planeType.PlaneMovementSpeed * Time.deltaTime * _t.up, ForceMode2D.Force);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         _isInEditPathMode = !_isInEditPathMode;
-
-        if (_isInEditPathMode)
-            ShowPathLineRenderer();
-        else
-            HidePathLineRenderer();
-
+        SetSelectionState();
         UpdatePathLineRenderer();
+    }
+
+    public void SelectPlane()
+    {
+        _isInEditPathMode = true;
+        SetSelectionState();
+        UpdatePathLineRenderer();
+    }
+
+    private void SetSelectionState()
+    {
+        if (_isInEditPathMode)
+        {
+            ShowPathLineRenderer();
+            ShowExitAngle();
+            GameEventManager.Instance.OnPlaneSelect?.Invoke(gameObject);
+            GameEventManager.Instance.OnShowAirCraftDetails?.Invoke(planeType);
+        }
+        else
+        {
+            HidePathLineRenderer();
+            HideExitAngle();
+            GameEventManager.Instance.OnPlaneDeselecting?.Invoke();
+            GameEventManager.Instance.OnHideAirCraftDetails?.Invoke();
+        }
     }
 
     private void AddPointToMovementWaypoints()
@@ -137,7 +165,7 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
             m_waypointsCopy[i + 1] = _movementWaypoints[i];
 
         if (m_waypointsCopy.Length == 2)
-            m_waypointsCopy[^1] = _t.up * 1000;
+            m_waypointsCopy[^1] = _t.up * 100;
         else
             m_waypointsCopy[^1] = (m_waypointsCopy[^2] - m_waypointsCopy[^3]).normalized * 1000;
 
@@ -166,5 +194,20 @@ public class PlaneMovementManager : MonoBehaviour, IPointerClickHandler
             UpdatePathLineRenderer();
 
         StartCoroutine(UpdatePathLineRendererTimer());
+    }
+
+    private void HideExitAngle()
+    {
+        GameEventManager.Instance.OnHideExitAngle?.Invoke();
+    }
+
+    private void ShowExitAngle()
+    {
+        GameEventManager.Instance.OnShowExitAngle?.Invoke(new() { ExitRange = ExitAngle });
+    }
+
+    public void AddStartPoint(Vector2 point)
+    {
+        _StartPoint = point;
     }
 }

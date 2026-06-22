@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7f43a3833262948ac3020a643ebdf2, type: 3}
+  m_Name: Jet Fighter
+  m_EditorClassIdentifier: Assembly-CSharp::PlaneType
+  PlaneName: F-21
+  PlaneModelID: F-21
+  PlaneSprite: {fileID: 585206620975745392, guid: 6d8618b751121ab41a0166b6acc480f3, type: 3}
+  planeType: 80
+  planeSize: 15
+  PlaneMass: 20
+  PlaneMovementSpeed: 500
+  PlaneTurningDistance: 0.2
+  PlaneRotatingSpeed: 50
+  PlaneHealth: 100
+  RotatesWhenMoving: 0
+  PlaneCanGiveDamage: 1
+  PlaneDamage: 10
+  PlaneDamageLayerMask:
+    serializedVersion: 2
+    m_Bits: 64

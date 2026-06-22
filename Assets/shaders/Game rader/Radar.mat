@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Radar
+  m_Shader: {fileID: -6465566751694194690, guid: c757fa018acb37e459d6c1d6604d193b, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Screen_texturs:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Grid_Transaperanty: 0.8
+    - _Grid_line_width: 0.95
+    - _Grid_multpalier: 20
+    - _Grid_transaperty: 0.5
+    - _Radial_grid_Transaperanty: 0.5
+    - _Radial_grid_cut_off: 0.3
+    - _Radial_grid_line_width: 0.05
+    - _Radial_grid_tialling: 12
+    - _Render_exit_direction: 1
+    - _Veniate_power: 24.8
+    - _exit_line_width: 0.005
+    - _scan_line_Transaperanty: 0.25
+    - _scan_line_speed: 0.2
+    - _scan_line_width: 20
+    m_Colors:
+    - _Exit_angle_range: {r: 20, g: 90, b: 0, a: 0}
+    - _Grid_color: {r: 0.22574759, g: 0.25339556, b: 0.8396226, a: 1}
+    - _Radial_Grid_color: {r: 0.32631072, g: 0.2511125, b: 0.9339623, a: 1}
+    - _Scan_line_color: {r: 0.33999997, g: 0.3684706, b: 1, a: 1}
+    - _World_Color: {r: 0.27551803, g: 0.25415927, b: 2.342685, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
